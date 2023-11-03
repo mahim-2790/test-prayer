@@ -177,7 +177,27 @@ app.post("/response", (req, res) => {
       const response = { status: 2050, message: "Order not complete" };
       res.status(200).json(response);
     } else {
-      // Add advanced security checks if needed
+      /*Add advanced security checks if needed
+
+        const sortedArgsKeys = {};
+        Object.keys(GETDATA)
+          .sort()
+          .forEach((key) => {
+            sortedArgsKeys[key] = GETDATA[key];
+          });
+        
+          const signature = crypto
+          .createHmac("sha256", securityKey)
+          .update(argsString)
+          .digest("hex");
+
+        console.log("signature", signature);
+
+        if(signature !== auth[1]){
+          const response = { status: 2030, message: "Signature not matched." };
+          res.status(200).json(response);
+        }
+      */
 
       const data = { status: 2040, message: GETDATA };
 
