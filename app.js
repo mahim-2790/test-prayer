@@ -39,6 +39,7 @@ app.post("/request", async (req, res) => {
   /////////
   const data = req.body;
   //creating unique order id
+  // it can also be send from front end
   data.order_id = new Date().getTime();
   //sort the data order by key
   const sortedArgsKeys = {};
@@ -66,7 +67,6 @@ app.post("/request", async (req, res) => {
     return queryString.join("&");
   }
   const modifiedArgsStr = buildQueryString(sortedArgsKeys);
-  console.log("modifiedArgsStr", modifiedArgsStr);
 
   const argsString = new URLSearchParams(modifiedArgsStr).toString();
   console.log("argsString", argsString);
@@ -131,6 +131,13 @@ app.post("/response", (req, res) => {
   const payerurl_public_key = "de1e85e8a087fed83e4a3ba9dfe36f08";
   const data = req.body;
   console.log("data", data);
+  const filename = "payerurl.txt";
+
+  fs.appendFile(filename, JSON.stringify(data), (err) => {
+    if (err) {
+      console.error("Error writing to log file", err);
+    }
+  });
   const authStr = req.get("Authorization");
 
   let auth;
@@ -203,7 +210,7 @@ app.post("/response", (req, res) => {
 
       // Your custom code here
 
-      const filename = "payerurl.log";
+      // const filename = "payerurl.log";
 
       fs.appendFile(filename, JSON.stringify(data), (err) => {
         if (err) {
