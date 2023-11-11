@@ -132,15 +132,16 @@ app.post("/response", (req, res) => {
   const payerurl_public_key = "de1e85e8a087fed83e4a3ba9dfe36f08";
   const data = req.body;
   console.log("data", data);
-  const filename = "payerurl.txt";
-
-  fs.appendFile("payerurl.txt", JSON.stringify(data), (err) => {
-    if (err) {
-      console.error("Error writing to log file", err);
-    } else {
-      console.log("printed to file");
-    }
-  });
+  // const filename = "payerurl.log";
+  // if (data) {
+  //   fs.appendFile(filename, JSON.stringify(data), (err) => {
+  //     if (err) {
+  //       console.error("Error writing to log file", err);
+  //     } else {
+  //       console.log("printed to file");
+  //     }
+  //   });
+  // }
   const authStr = req.get("Authorization");
 
   let auth;
@@ -156,6 +157,8 @@ app.post("/response", (req, res) => {
     ).toString("utf8");
     auth = authStrDecoded.split(":");
   }
+
+  console.log("auth", auth);
 
   if (payerurl_public_key !== auth[0]) {
     const response = { status: 2030, message: "Public key doesn't match" };
