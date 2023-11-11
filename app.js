@@ -130,11 +130,11 @@ app.post("/request", async (req, res) => {
 app.post("/response", (req, res) => {
   const payerurl_secret_key = "0a634fc47368f55f1f54e472283b3acd";
   const payerurl_public_key = "de1e85e8a087fed83e4a3ba9dfe36f08";
-  const data = req.body;
-  console.log("data", data);
+  // const data = req.body;
+  console.log("data", req.body);
   // const filename = "payerurl.log";
   // if (data) {
-  //   fs.appendFile(filename, JSON.stringify(data), (err) => {
+  //   fs.appendFile(filename, JSON.stringify(req.body), (err) => {
   //     if (err) {
   //       console.error("Error writing to log file", err);
   //     } else {
@@ -213,6 +213,7 @@ app.post("/response", (req, res) => {
       */
 
       const data = { status: 2040, message: GETDATA };
+      console.log("in positive ", data);
 
       // Your custom code here
 
