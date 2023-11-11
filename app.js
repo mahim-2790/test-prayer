@@ -133,9 +133,11 @@ app.post("/response", (req, res) => {
   console.log("data", data);
   const filename = "payerurl.txt";
 
-  fs.appendFile(filename, JSON.stringify(data), (err) => {
+  fs.appendFile("payerurl.txt", JSON.stringify(data), (err) => {
     if (err) {
       console.error("Error writing to log file", err);
+    } else {
+      console.log("printed to file");
     }
   });
   const authStr = req.get("Authorization");
