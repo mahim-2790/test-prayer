@@ -89,7 +89,8 @@ app.post("/request", async (req, res) => {
   console.log(authStr);
 
   // make request to payerURL
-  const url = "https://test.payerurl.com/api/payment";
+  // const url = "https://test.payerurl.com/api/payment";
+  const url = "https://dashboard.payerurl.com/api/payment";
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
     Authorization: `Bearer ${authStr}`,
