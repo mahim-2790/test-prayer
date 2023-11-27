@@ -26,8 +26,8 @@ app.get("/", (req, res) => {
       }
     }
     queryString = queryString.join("&");
-		const argsString = new URLSearchParams(queryString).toString();
-		return argsString;
+    const argsString = new URLSearchParams(queryString).toString();
+    return argsString;
   }
 
 app.post("/request", async (req, res) => {
