@@ -93,3 +93,32 @@ const signature = crypto
 // Create auth string in base64 format
 const authStr = btoa(`${publicKey}:${signature}`);
 ```
+
+### Step 6: Prepare Request Headers and Properties
+
+In this step, you will set up the necessary request headers and make the POST request to PayerURL.
+
+```javascript
+// Set up the request headers
+const url = "https://test.payerurl.com/api/payment";
+const headers = {
+  "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+  Authorization: `Bearer ${authStr}`,
+};
+
+// Prepare the request options
+const requestOptions = {
+  method: "POST",
+  headers: headers,
+  body: argsString,
+};
+
+// Make the request using fetch or axios
+const response = await fetch(url, requestOptions);
+const reData = await response.json();
+
+### Step 7: Get Redirect URL
+
+After making the payment request to PayerURL, you will need to extract the "redirectTO" from the response (`reData`) and send it to the frontend to redirect the user to this URL.
+
+
