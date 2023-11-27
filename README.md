@@ -4,7 +4,7 @@ This guide provides step-by-step instructions for integrating PayerURL into your
 
 ## Prerequisites
 
-1. Obtain your API public key and secret key from the [PayerURL website]([https://www.payerurl.com](https://dashboard.payerurl.com/)).
+1. Obtain your API public key and secret key from the [PayerURL website](https://dashboard.payerurl.com/).
 
 ## Request Setup
 
