@@ -123,3 +123,98 @@ const reData = await response.json();
 After making the payment request to PayerURL, you will need to extract the "redirectTO" from the response (`reData`) and send it to the frontend to redirect the user to this URL.
 
 
+## Response Handling
+
+### Step 1: Decode Authorization Header
+
+In your response route, decode the Authorization header and split the public key and signature.
+
+```javascript
+const authStr = req.get("Authorization");
+let auth;
+
+if (!authStr || !authStr.startsWith("Bearer ")) {
+  const authStrPost = Buffer.from(req.body.authStr, "base64").toString("utf8");
+  auth = authStrPost.split(":");
+} else {
+  const authStrDecoded = Buffer.from(
+    authStr.replace("Bearer ", ""),
+    "base64"
+  ).toString("utf8");
+  auth = authStrDecoded.split(":");
+}
+```
+
+### Step 2: Process Response
+Process the PayerURL response and handle various scenarios.
+
+```javascript
+if (payerurl_public_key !== auth[0]) {
+    const response = { status: 2030, message: "Public key doesn't match" };
+    res.status(200).json(response);
+  } else {
+    const GETDATA = {
+      order_id: req.body.order_id,
+      ext_transaction_id: req.body.ext_transaction_id,
+      transaction_id: req.body.transaction_id,
+      status_code: req.body.status_code,
+      note: req.body.note,
+      confirm_rcv_amnt: req.body.confirm_rcv_amnt,
+      confirm_rcv_amnt_curr: req.body.confirm_rcv_amnt_curr,
+      coin_rcv_amnt: req.body.coin_rcv_amnt,
+      coin_rcv_amnt_curr: req.body.coin_rcv_amnt_curr,
+      txn_time: req.body.txn_time,
+    };
+
+    if (!GETDATA.transaction_id) {
+      const response = { status: 2050, message: "Transaction ID not found" };
+      res.status(200).json(response);
+    } else if (!GETDATA.order_id) {
+      const response = { status: 2050, message: "Order ID not found" };
+      res.status(200).json(response);
+    } else if (GETDATA.status_code === 20000) {
+      const response = { status: 20000, message: "Order Cancelled" };
+      res.status(200).json(response);
+    } else if (GETDATA.status_code !== 200) {
+      const response = { status: 2050, message: "Order not complete" };
+      res.status(200).json(response);
+    } else {
+      /*Add advanced security checks if needed
+
+        const sortedArgsKeys = {};
+        Object.keys(GETDATA)
+          .sort()
+          .forEach((key) => {
+            sortedArgsKeys[key] = GETDATA[key];
+          });
+        
+          const signature = crypto
+          .createHmac("sha256", securityKey)
+          .update(argsString)
+          .digest("hex");
+
+        console.log("signature", signature);
+
+        if(signature !== auth[1]){
+          const response = { status: 2030, message: "Signature not matched." };
+          res.status(200).json(response);
+        }
+      */
+
+      const data = { status: 2040, message: GETDATA };
+
+      // Your custom code here
+
+      // const filename = "payerurl.log";
+
+      fs.appendFile(filename, JSON.stringify(data), (err) => {
+        if (err) {
+          console.error("Error writing to log file", err);
+        }
+      });
+
+      res.status(200).json(data);
+    }
+  }
+```
+
