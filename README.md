@@ -116,6 +116,7 @@ const requestOptions = {
 // Make the request using fetch or axios
 const response = await fetch(url, requestOptions);
 const reData = await response.json();
+```
 
 ### Step 7: Get Redirect URL
 
