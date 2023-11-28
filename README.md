@@ -45,7 +45,7 @@ const paymentRequest = {
   type: "php",
 };
 ```
-## "order_id" must be unique
+# "order_id" must be unique
 Make sure the request object is containing all the parameters.
 			 
 You need to provide the success page and cancel page url of your frontend application as shown.
