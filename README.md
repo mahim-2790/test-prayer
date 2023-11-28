@@ -45,7 +45,7 @@ const paymentRequest = {
   type: "php",
 };
 ```
-
+## "order_id" must be unique
 Make sure the request object is containing all the parameters.
 			 
 You need to provide the success page and cancel page url of your frontend application as shown.
@@ -179,7 +179,8 @@ if (payerurl_public_key !== auth[0]) {
       const response = { status: 2050, message: "Order not complete" };
       res.status(200).json(response);
     } else {
-      /*Add advanced security checks if needed
+      /********************************************
+	Add advanced security checks if needed
 
         const sortedArgsKeys = {};
         Object.keys(GETDATA)
@@ -199,12 +200,15 @@ if (payerurl_public_key !== auth[0]) {
           const response = { status: 2030, message: "Signature not matched." };
           res.status(200).json(response);
         }
-      */
+      *****************************************/
 
       const data = { status: 2040, message: GETDATA };
 
-      // Your custom code here
-
+      /*********************
+	*	 Your custom code here
+	*
+	*
+	****************************/
       // const filename = "payerurl.log";
 
       fs.appendFile(filename, JSON.stringify(data), (err) => {
